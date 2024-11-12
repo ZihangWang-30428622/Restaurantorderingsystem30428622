@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">asse 2</string>
+    <string name="ordering">Ordering</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="super_sale_nupto_40_off">SUPER SALE\nUPTO 40% OFF</string>
+    <string name="select_seat">Select Seat</string>
+    <string name="please_enter_the_seat_number">Please enter the seat number</string>
+    <string name="enter_seat_number">Enter seat number</string>
+    <string name="confirm_seat">Confirm Seat</string>
+    <string name="ordering_1">Ordering</string>
+    <string name="_4">$ 4 /</string>
+    <string name="enter_the_number_you_want_to_select">Enter the number you want to select</string>
+    <string name="_5">$ 5 /</string>
+    <string name="enter_the_number_you_want_to_select_1">Enter the number you want to select</string>
+    <string name="add_more_rice">Add more Rice</string>
+    <string name="total_00_00">Total: $ 00.00</string>
+    <string name="submit">SUBMIT</string>
+    <string name="_1">$ 1 /</string>
+    <string name="_0">0</string>
+    <string name="_2">$ 2 /</string>
+    <string name="_0_1">0</string>
+    <string name="add_more_sugar">Add more sugar</string>
+    <string name="total_00_00_1">Total: $ 00.00</string>
+    <string name="submit_1">SUBMIT</string>
+    <string name="total_0_00_1">Total: $0.00</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="need_cutlery">Need Cutlery</string>
+    <string name="add_remarks">Add Remarks</string>
+    <string name="rate_your_experience">Rate Your Experience:</string>
+    <string name="submit_order">Submit Order</string>
+    <string name="time_elapsed_0_seconds">Time Elapsed: 0 seconds</string>
+    <string name="_00_00_00">00:00:00</string>
+    <string name="add_more_sugar_on_juice">add_more_sugar on juice</string>
+    <string name="add_more_sugar_on_">add more sugar on juice</string>
+    <string name="Add_more_sugar_on_juice">add more sugar on juice</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

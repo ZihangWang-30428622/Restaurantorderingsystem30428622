@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FoodSelectionActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/_9575cd"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ordering_1"
+        android:textSize="@dimen/_30sp"
+        android:textColor="@color/_388e3c"
+        android:layout_marginTop="@dimen/_16dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/_16dp" />
+
+
+    <ImageView
+        android:id="@+id/gongbao_image"
+        android:layout_width="@dimen/_150dp"
+        android:layout_height="@dimen/_100dp"
+        android:src="@drawable/gongbao_image"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="@dimen/_16dp"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/gongbao_image"
+        app:layout_constraintTop_toTopOf="@id/gongbao_image"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/gongbao_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            android:text="@string/_4"
+            android:textSize="@dimen/_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <EditText
+            android:id="@+id/et_count_gongbao"
+            android:visibility="visible"
+            android:layout_width="@dimen/_80dp"
+            android:layout_height="@dimen/_48dp"
+            android:inputType="number"
+            android:hint="@string/enter_the_number_you_want_to_select"
+            android:textSize="@dimen/_20sp"
+            android:gravity="center"
+            android:backgroundTint="@color/_8e24aa"
+            android:textColor="@color/_000000"
+            app:layout_constraintStart_toEndOf="@id/gongbao_price"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+    <ImageView
+        android:id="@+id/yuxiang_image"
+        android:layout_width="@dimen/_150dp"
+        android:layout_height="@dimen/_100dp"
+        android:src="@drawable/yuxiang_image"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="@dimen/_16dp"
+        app:layout_constraintTop_toBottomOf="@id/gongbao_image"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/yuxiang_image"
+        app:layout_constraintTop_toTopOf="@id/yuxiang_image"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/yuxiang_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            android:text="@string/_5"
+            android:textSize="@dimen/_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+
+
+        <EditText
+            android:id="@+id/et_count_yuxiang"
+            android:layout_width="@dimen/_80dp"
+            android:layout_height="@dimen/_48dp"
+            android:visibility="visible"
+            android:hint="@string/enter_the_number_you_want_to_select_1"
+            android:inputType="number"
+            android:textSize="@dimen/_20sp"
+            android:gravity="center"
+            android:backgroundTint="@color/_8e24aa"
+            android:textColor="@color/_000000"
+            app:layout_constraintStart_toEndOf="@id/yuxiang_price"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <CheckBox
+            android:id="@+id/checkbox_sugar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_more_rice"
+            android:layout_marginBottom="@dimen/_8dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_total_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_00_00"
+            android:textSize="@dimen/_24sp"
+            android:textColor="@color/_000000"
+            android:layout_marginBottom="@dimen/_8dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_submit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:backgroundTint="@color/_8e24aa"
+            android:textColor="@color/ffffff"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.8" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
