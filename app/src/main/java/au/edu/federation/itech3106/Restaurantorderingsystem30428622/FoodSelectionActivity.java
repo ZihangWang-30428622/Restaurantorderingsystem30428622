@@ -1,8 +1,5 @@
 package au.edu.federation.itech3106.Restaurantorderingsystem30428622;
 
-import static android.content.Context.MODE_PRIVATE;
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,16 +8,17 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
-
+import com.google.android.material.button.MaterialButton;
 
 public class FoodSelectionActivity extends AppCompatActivity {
     private static final double GONGBAO_PRICE = 4.0;
@@ -31,21 +29,30 @@ public class FoodSelectionActivity extends AppCompatActivity {
     private static final String CHECKBOX_RICE_KEY = "checkbox_rice";
     private static final String TOTAL_PRICE_KEY = "total_price";
 
+    private CircleView circleView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_food_selection);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("FoodSelection");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Food Selection");
+        }
 
         EditText etCountGongbao = findViewById(R.id.et_count_gongbao);
         EditText etCountYuxiang = findViewById(R.id.et_count_yuxiang);
         TextView tvTotalPrice = findViewById(R.id.tv_total_price);
         CheckBox checkboxRice = findViewById(R.id.checkbox_sugar);
 
+        // 添加 CircleView 到布局中
+        circleView = new CircleView(this);
+        ConstraintLayout mainLayout = findViewById(R.id.food_selection_layout);
+        mainLayout.addView(circleView);
+
+        // 恢复 SharedPreferences 中保存的数据
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         etCountGongbao.setText(prefs.getString(COUNT_GONGBAO_KEY, ""));
         etCountYuxiang.setText(prefs.getString(COUNT_YUXIANG_KEY, ""));
@@ -54,19 +61,33 @@ public class FoodSelectionActivity extends AppCompatActivity {
 
         calculateTotalPrice();
 
+        // 添加触摸监听器来更新 CircleView 显示红圈
+        mainLayout.setOnTouchListener((view, event) -> {
+            circleView.updateCircleArray(event);
+            return true;
+        });
 
+        // 设置 EditText 和 CheckBox 的监听事件
         etCountGongbao.addTextChangedListener(new GenericTextWatcher());
         etCountYuxiang.addTextChangedListener(new GenericTextWatcher());
         checkboxRice.setOnCheckedChangeListener((buttonView, isChecked) -> calculateTotalPrice());
 
-
-        Button confirmButton = findViewById(R.id.btn_submit);
+        // 确认按钮的点击事件，显示确认对话框
+        MaterialButton confirmButton = findViewById(R.id.btn_submit);
         confirmButton.setOnClickListener(v -> {
             double currentTotal = calculateTotalPrice();
-            Intent intent = new Intent(FoodSelectionActivity.this, Fragment_DrinkSelectionActivity.class);
-            intent.putExtra("food_total", currentTotal);
-            startActivity(intent);
 
+            // 显示确认对话框
+            new AlertDialog.Builder(FoodSelectionActivity.this)
+                    .setTitle("Confirm Order")
+                    .setMessage(String.format("Your total is $ %.2f. Do you want to proceed?", currentTotal))
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        Intent intent = new Intent(FoodSelectionActivity.this, Fragment_DrinkSelectionActivity.class);
+                        intent.putExtra("food_total", currentTotal);
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         });
 
         calculateTotalPrice();
@@ -75,7 +96,7 @@ public class FoodSelectionActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
+        // 保存用户输入和总价到 SharedPreferences
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         EditText etCountGongbao = findViewById(R.id.et_count_gongbao);
@@ -113,8 +134,7 @@ public class FoodSelectionActivity extends AppCompatActivity {
             return 0;
         }
         try {
-            int count = Integer.parseInt(inputText);
-            return Math.max(0, count);
+            return Math.max(0, Integer.parseInt(inputText));
         } catch (NumberFormatException e) {
             return 0;
         }
@@ -140,6 +160,7 @@ public class FoodSelectionActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -166,11 +187,7 @@ public class FoodSelectionActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent intent = new Intent(FoodSelectionActivity.this, SeatSelectionActivity.class);
         startActivity(intent);
+        Toast.makeText(this, "Returning to Seat Selection", Toast.LENGTH_SHORT).show();
         finish();
     }
 }
-
-
-
-
-

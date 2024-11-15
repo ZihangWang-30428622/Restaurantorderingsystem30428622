@@ -13,7 +13,7 @@
         android:scaleType="centerCrop"
         android:layout_marginEnd="@dimen/_16dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" /> <!-- 可访问性描述 -->
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Juice Price Text -->
     <TextView
@@ -41,7 +41,7 @@
         android:backgroundTint="@color/_8e24aa"
         android:textColor="@color/_000000"
         app:layout_constraintStart_toEndOf="@id/juice_price"
-        app:layout_constraintTop_toTopOf="@id/juice_image"
-        app:layout_constraintEnd_toEndOf="parent" /> <!-- 添加右侧约束 -->
+        app:layout_constraintTop_toTopOf="@id/juice_price"
+        app:layout_constraintBottom_toBottomOf="@id/juice_price" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

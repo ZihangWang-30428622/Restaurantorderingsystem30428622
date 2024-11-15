@@ -1,24 +1,27 @@
 package au.edu.federation.itech3106.Restaurantorderingsystem30428622;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
-
+import com.google.android.material.button.MaterialButton;
 
 public class SeatSelectionActivity extends AppCompatActivity {
 
     private EditText seatNumberInput;
     private static final String PREFS_NAME = "MyPrefs";
     private static final String SEAT_SELECTION_KEY = "seat_selection";
+    private CircleView circleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,28 +30,32 @@ public class SeatSelectionActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.showOverflowMenu();
-        getSupportActionBar().setTitle("SeatSelection");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Seat Selection");
+        }
 
         seatNumberInput = findViewById(R.id.input_seat_number);
-
-
         restoreSelection();
 
-        Button confirmButton = findViewById(R.id.btn_confirm_seat);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String seatNumberText = seatNumberInput.getText().toString();
-                if (seatNumberText.isEmpty() || Integer.parseInt(seatNumberText) > 28) {
-                    Toast.makeText(SeatSelectionActivity.this, "Enter an error. The seat number must be no larger than 28", Toast.LENGTH_SHORT).show();
-                } else {
-                    saveSelection(seatNumberText);
-                    Intent intent = new Intent(SeatSelectionActivity.this, FoodSelectionActivity.class);
-                    startActivity(intent);
-                    finish(); // 结束当前 Activity A
-                }
+        MaterialButton confirmButton = findViewById(R.id.btn_confirm_seat);
+        confirmButton.setOnClickListener(v -> {
+            String seatNumberText = seatNumberInput.getText().toString();
+            if (seatNumberText.isEmpty() || Integer.parseInt(seatNumberText) > 28) {
+                Toast.makeText(SeatSelectionActivity.this, "Enter an error. The seat number must be no larger than 28", Toast.LENGTH_SHORT).show();
+            } else {
+                showConfirmationDialog(seatNumberText);
             }
+        });
+
+        // 添加 CircleView 到布局中
+        circleView = new CircleView(this);
+        ConstraintLayout mainLayout = findViewById(R.id.seat_selection_layout);
+        mainLayout.addView(circleView);
+
+        // 设置主布局的触摸监听，更新 CircleView
+        mainLayout.setOnTouchListener((view, event) -> {
+            circleView.updateCircleArray(event);
+            return true;
         });
     }
 
@@ -59,6 +66,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -87,6 +95,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent intent = new Intent(SeatSelectionActivity.this, MainMenuActivity.class);
         startActivity(intent);
+        Toast.makeText(this, "Returning to Menu", Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -108,27 +117,19 @@ public class SeatSelectionActivity extends AppCompatActivity {
     private String getCurrentSelection() {
         return seatNumberInput.getText().toString();
     }
+
+    // 显示确认对话框
+    private void showConfirmationDialog(String seatNumber) {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Seat Selection")
+                .setMessage("Are you sure you want to select seat number " + seatNumber + "?")
+                .setPositiveButton("Confirm", (dialog, which) -> {
+                    saveSelection(seatNumber);
+                    Intent intent = new Intent(SeatSelectionActivity.this, FoodSelectionActivity.class);
+                    startActivity(intent);
+                    finish();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,63 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainMenuActivity"
     android:background="@color/ff6f61">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_menu_layout">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
         android:background="@color/_9575cd"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <TextView
-        android:id="@+id/tv_restaurant_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/restaurant"
-        android:textColor="@color/ffeb3b"
-        android:textSize="@dimen/_24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        <!-- Video View (Hidden by default and placed at the top) -->
+        <VideoView
+            android:id="@+id/video_view"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:layout_marginTop="@dimen/_16dp" />
-
-    <TextView
-        android:id="@+id/tv_promotion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/super_sale_nupto_40_off"
-    android:textColor="@color/ffffff"
-    android:textSize="@dimen/_36sp"
-    android:textStyle="bold"
-    android:gravity="center"
-    app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    android:layout_marginTop="@dimen/_32dp" />
-
-    <Button
-        android:id="@+id/btn_select_seat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/select_seat"
-        android:textColor="@color/_000000"
-        android:backgroundTint="@color/ffeb3b"
-        app:layout_constraintTop_toBottomOf="@id/tv_promotion"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/_32dp"
-        android:padding="@dimen/_16dp"
-        android:layout_marginBottom="@dimen/_32dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Restaurant Name TextView -->
+        <TextView
+            android:id="@+id/tv_restaurant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant"
+            android:textColor="@color/ffeb3b"
+            android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/video_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
 
+        <!-- Promotion Text TextView -->
+        <TextView
+            android:id="@+id/tv_promotion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/super_sale_nupto_40_off"
+            android:textColor="@color/ffffff"
+            android:textSize="36sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
 
+        <!-- Select Seat Button -->
+        <Button
+            android:id="@+id/btn_select_seat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Select Seat"
+            android:textColor="@color/_000000"
+            android:backgroundTint="@color/ffeb3b"
+            app:layout_constraintTop_toBottomOf="@id/tv_promotion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.6"
+        android:layout_marginTop="16dp"
+        android:padding="12dp" />
+
+        <!-- Button to Upload Audio -->
+        <Button
+            android:id="@+id/btn_upload_audio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Upload Audio"
+            android:textColor="@color/_000000"
+            android:backgroundTint="@color/ffeb3b"
+            app:layout_constraintTop_toBottomOf="@id/btn_select_seat"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.6"
+        android:layout_marginTop="16dp"
+        android:padding="12dp" />
+
+        <!-- Button to Play/Pause Audio -->
+        <Button
+            android:id="@+id/btn_play_pause_audio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Play/Pause Audio"
+            android:textColor="@color/_000000"
+            android:backgroundTint="@color/ffeb3b"
+            app:layout_constraintTop_toBottomOf="@id/btn_upload_audio"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.6"
+            android:layout_marginTop="16dp"
+            android:padding="12dp" />
+
+        <!-- Button to Play/Pause Video -->
+        <Button
+            android:id="@+id/btn_play_pause_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Play/Pause Video"
+            android:textColor="@color/_000000"
+            android:backgroundTint="@color/ffeb3b"
+            app:layout_constraintTop_toBottomOf="@id/btn_play_pause_audio"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.6"
+            android:layout_marginTop="16dp"
+            android:padding="12dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -39,7 +39,8 @@
         android:backgroundTint="@color/_8e24aa"
         android:textColor="@color/_000000"
         app:layout_constraintStart_toEndOf="@id/lanmei_price"
-        app:layout_constraintTop_toTopOf="@id/lanmei_image"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/lanmei_price"
+        app:layout_constraintBottom_toBottomOf="@id/lanmei_price"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

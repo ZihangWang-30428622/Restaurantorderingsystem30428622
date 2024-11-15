@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/drink_selection_layout"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
@@ -41,10 +42,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Add_more_sugar_on_juice"
-        app:layout_constraintTop_toBottomOf="@id/lanmei_fragment_container"
+        app:layout_constraintBottom_toTopOf="@id/tv_total_price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginBottom="@dimen/_8dp" />
+
 
     <!-- Total Price TextView -->
     <TextView
@@ -52,20 +54,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/total_00_00_1"
-        app:layout_constraintTop_toBottomOf="@id/checkbox_sugar"
+        android:textColor="@color/_000000"
+        android:textSize="@dimen/_24sp"
+        android:layout_marginBottom="@dimen/_8dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_submit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        />
 
     <!-- Submit Button -->
     <Button
         android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_0dp"
         android:layout_height="wrap_content"
         android:text="@string/submit_1"
-        app:layout_constraintTop_toBottomOf="@id/tv_total_price"
+        android:backgroundTint="@color/_8e24aa"
+        android:textColor="@color/ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginBottom="@dimen/_16dp"
+        app:layout_constraintWidth_percent="0.8"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

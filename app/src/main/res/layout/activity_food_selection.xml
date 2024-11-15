@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/food_selection_layout"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FoodSelectionActivity">
@@ -75,11 +76,6 @@
             app:layout_constraintStart_toEndOf="@id/gongbao_price"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
     <ImageView
         android:id="@+id/yuxiang_image"
         android:layout_width="@dimen/_150dp"
@@ -129,12 +125,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
-
-
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -173,7 +163,8 @@
             android:text="@string/submit"
             android:backgroundTint="@color/_8e24aa"
             android:textColor="@color/ffffff"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/_16dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
