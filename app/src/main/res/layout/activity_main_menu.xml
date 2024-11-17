@@ -5,124 +5,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainMenuActivity"
-    android:background="@color/ff6f61">
+    android:background="@color/background_primary"
+    tools:context=".MainMenuActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/main_menu_layout">
 
+        <!-- CircleView -->
+        <au.edu.federation.itech3106.Restaurantorderingsystem30428622.CircleView
+            android:id="@+id/circle_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/circle_view_margin_top" />
+
         <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-        android:background="@color/_9575cd"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            style="@style/ToolbarStyle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <!-- Video View (Hidden by default and placed at the top) -->
+        <!-- Video View (Hidden by default) -->
         <VideoView
             android:id="@+id/video_view"
             android:layout_width="0dp"
-            android:layout_height="300dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone" />
+            android:layout_height="@dimen/video_view_height"
+            android:layout_marginTop="@dimen/video_view_margin_top"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone" />
 
-        <!-- Restaurant Name TextView -->
+        <!-- Restaurant Name -->
         <TextView
             android:id="@+id/tv_restaurant_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/restaurant"
-            android:textColor="@color/ffeb3b"
-            android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/video_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+            style="@style/RestaurantNameText"
+            android:text="@string/restaurant_name"
+            app:layout_constraintTop_toBottomOf="@id/video_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Promotion Text TextView -->
+        <!-- Promotion Text -->
         <TextView
             android:id="@+id/tv_promotion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/super_sale_nupto_40_off"
-            android:textColor="@color/ffffff"
-            android:textSize="36sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp" />
+            style="@style/PromotionText"
+            android:text="@string/promotion_text"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Select Seat Button -->
         <Button
             android:id="@+id/btn_select_seat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Select Seat"
-            android:textColor="@color/_000000"
-            android:backgroundTint="@color/ffeb3b"
+            style="@style/PrimaryButton"
+            android:text="@string/select_seat"
+            app:layout_constraintWidth_percent="0.6"
             app:layout_constraintTop_toBottomOf="@id/tv_promotion"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.6"
-        android:layout_marginTop="16dp"
-        android:padding="12dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Button to Upload Audio -->
+        <!-- Upload Audio Button -->
         <Button
             android:id="@+id/btn_upload_audio"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Upload Audio"
-            android:textColor="@color/_000000"
-            android:backgroundTint="@color/ffeb3b"
+            style="@style/PrimaryButton"
+            android:text="@string/upload_audio"
+            app:layout_constraintWidth_percent="0.6"
             app:layout_constraintTop_toBottomOf="@id/btn_select_seat"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.6"
-        android:layout_marginTop="16dp"
-        android:padding="12dp" />
+            android:layout_marginTop="@dimen/button_margin_top" />
 
-        <!-- Button to Play/Pause Audio -->
+        <!-- Play/Pause Audio Button -->
         <Button
             android:id="@+id/btn_play_pause_audio"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Play/Pause Audio"
-            android:textColor="@color/_000000"
-            android:backgroundTint="@color/ffeb3b"
+            style="@style/PrimaryButton"
+            android:text="@string/play_pause_audio"
+            app:layout_constraintWidth_percent="0.6"
             app:layout_constraintTop_toBottomOf="@id/btn_upload_audio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.6"
-            android:layout_marginTop="16dp"
-            android:padding="12dp" />
+            android:layout_marginTop="@dimen/button_margin_top" />
 
-        <!-- Button to Play/Pause Video -->
+        <!-- Play/Pause Video Button -->
         <Button
             android:id="@+id/btn_play_pause_video"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Play/Pause Video"
-            android:textColor="@color/_000000"
-            android:backgroundTint="@color/ffeb3b"
+            style="@style/PrimaryButton"
+            android:text="@string/play_pause_video"
+            app:layout_constraintWidth_percent="0.6"
             app:layout_constraintTop_toBottomOf="@id/btn_play_pause_audio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.6"
-            android:layout_marginTop="16dp"
-            android:padding="12dp" />
+            android:layout_marginTop="@dimen/button_margin_top" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+

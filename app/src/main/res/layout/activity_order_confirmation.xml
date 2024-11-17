@@ -1,106 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/order_confirmation_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".OrderConfirmationActivity">
 
-
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/order_confirmation_layout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/_9575cd"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_order_total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/total_0_00_1"
-        android:textSize="@dimen/_24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="@dimen/_16dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- CircleView -->
+        <au.edu.federation.itech3106.Restaurantorderingsystem30428622.CircleView
+            android:id="@+id/circle_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin_large" />
 
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/ToolbarStyle2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Total Price -->
+        <TextView
+            android:id="@+id/tv_order_total"
+            style="@style/TotalTextStyle"
+            android:text="@string/order_total"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Seat Number -->
+        <TextView
+            android:id="@+id/tv_seat_number"
+            style="@style/SeatTextStyle"
+            android:text="@string/seat_number"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_total"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Recommendations Container -->
+        <LinearLayout
+            android:id="@+id/layout_recommendations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/tv_seat_number" />
 
-    <EditText
-        android:id="@+id/et_phone"
-        android:layout_width="@dimen/_0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_your_phone_number"
-        android:layout_marginBottom="@dimen/_16dp"
-        android:inputType="phone"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_total"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- Phone Number Input -->
+        <EditText
+            android:id="@+id/et_phone"
+            style="@style/EditTextStyle2"
+            android:hint="@string/enter_phone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_recommendations" />
 
+        <!-- Need Cutlery Checkbox -->
+        <CheckBox
+            android:id="@+id/cb_need_cutlery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/need_cutlery"
+            app:layout_constraintTop_toBottomOf="@id/et_phone"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <CheckBox
-        android:id="@+id/cb_need_cutlery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/need_cutlery"
-        android:layout_marginBottom="@dimen/_16dp"
-        app:layout_constraintTop_toBottomOf="@id/et_phone"
-        app:layout_constraintStart_toStartOf="parent" />
+        <!-- Remarks Input -->
+        <EditText
+            android:id="@+id/et_remarks"
+            style="@style/EditTextStyle2"
+            android:hint="@string/add_remarks"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_need_cutlery" />
 
+        <!-- Submit Order Button -->
+        <Button
+            android:id="@+id/btn_submit_order"
+            style="@style/ButtonStyle2"
+            android:text="@string/submit_order"
+            app:layout_constraintTop_toBottomOf="@id/et_remarks"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/et_remarks"
-        android:layout_width="@dimen/_0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/add_remarks"
-        android:layout_marginBottom="@dimen/_16dp"
-        android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@id/cb_need_cutlery"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
-
-
-
-
-
-
-    <Button
-        android:id="@+id/btn_submit_order"
-        android:layout_width="@dimen/_0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/submit_order"
-        android:layout_marginTop="@dimen/_16dp"
-        android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/et_remarks"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-    <TextView
-        android:id="@+id/tv_timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Maximum waiting time : 45 minutes"
-        android:textSize="@dimen/_18sp"
-        android:layout_marginTop="@dimen/_16sp"
-        app:layout_constraintTop_toBottomOf="@id/btn_submit_order"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>

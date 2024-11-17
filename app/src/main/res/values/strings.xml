@@ -35,4 +35,40 @@
     <string name="Add_more_sugar_on_juice">add more sugar on juice</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+    <string name="restaurant_name">Restaurant</string>
+    <string name="promotion_text">Super Sale! Up to 40% Off</string>
+    <string name="upload_audio">Upload Audio</string>
+    <string name="play_pause_audio">Play/Pause Audio</string>
+    <string name="play_pause_video">Play/Pause Video</string>
+
+
+    <string name="please_enter_seat_number">Please enter the seat number:</string>
+
+    <string name="order_total">Total: $0.00</string>
+    <string name="seat_number">Seat Number: Not Selected</string>
+    <string name="enter_phone">Enter your phone number</string>
+
+
+    <string name="total_price">Total: $0.00</string>
+ <string name="default_hint">Enter your input</string>
+
+
+
+    <string name="feedback_hint">Your feedback...</string>
+    <string name="submit_rating">Submit Rating</string>
+    <string name="reset">Reset</string>
+    <string name="rating_display">Your rating: 0</string>
+    <string name="char_count">50 characters left</string>
+
+
+
+
+
+
+
+
+
 </resources>

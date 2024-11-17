@@ -9,4 +9,31 @@
     <color name="_388e3c">#388E3C</color>
     <color name="_8e24aa">#8E24AA</color>
     <color name="ff6f61">#FF6F61</color>
+
+    <color name="background_primary">#FF6F61</color>
+    <color name="toolbar_background">#9575CD</color>
+    <color name="text_highlight">#FFFFFF</color>
+    <color name="button_background">#FFEB3B</color>
+    <color name="button_text">#000000</color>
+
+
+
+    <color name="text_color_primary">#000000</color>
+
+
+
+
+
+
+    <!-- Add missing image background color -->
+    <color name="image_background">#F5F5F5</color> <!-- 使用浅灰色背景作为示例 -->
+
+
+
+
+
+
+
+
+
 </resources>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -33,91 +34,90 @@ public class MainMenuActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.showOverflowMenu();
         getSupportActionBar().setTitle("MainMenu");
 
-        // 添加 CircleView 到布局中
-        circleView = new CircleView(this);
-        ConstraintLayout mainLayout = findViewById(R.id.main_menu_layout);
-        mainLayout.addView(circleView);
+        // 初始化 CircleView 并添加到布局中
+        circleView = findViewById(R.id.circle_view); // 假设 activity_main_menu.xml 已定义 CircleView
+        circleView.setOnTouchListener((view, event) -> {
+            circleView.updateCircleArray(event); // 更新 CircleView 的触摸位置
+            return true; // 返回 true 表示触摸事件已处理
+        });
 
-        // Select Seat Button
+        setupButtons();
+        setupVideoView();
+    }
+
+    private void setupButtons() {
+        // 座位选择按钮
         Button btnSelectSeat = findViewById(R.id.btn_select_seat);
-        btnSelectSeat.setOnClickListener(v -> {
-            Intent intent = new Intent(MainMenuActivity.this, SeatSelectionActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        btnSelectSeat.setOnClickListener(v -> navigateToSeatSelection());
 
-        // Upload Audio Button
+        // 上传音频按钮
         Button btnUploadAudio = findViewById(R.id.btn_upload_audio);
-        btnUploadAudio.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("audio/*");
-            startActivityForResult(intent, PICK_AUDIO_REQUEST);
-        });
+        btnUploadAudio.setOnClickListener(v -> selectAudio());
 
-        // Play/Pause Audio Button
+        // 播放/暂停音频按钮
         Button btnPlayPauseAudio = findViewById(R.id.btn_play_pause_audio);
-        btnPlayPauseAudio.setOnClickListener(v -> {
-            if (mediaPlayer != null) {
-                if (isPlayingAudio) {
-                    mediaPlayer.pause();
-                    isPlayingAudio = false;
-                } else {
-                    mediaPlayer.start();
-                    isPlayingAudio = true;
-                }
-            } else {
-                Toast.makeText(MainMenuActivity.this, "Please select an audio file first", Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnPlayPauseAudio.setOnClickListener(v -> toggleAudioPlayback());
 
-        // 设置并加载视频资源，但初始隐藏 VideoView
+        // 播放/暂停视频按钮
+        Button btnPlayPauseVideo = findViewById(R.id.btn_play_pause_video);
+        btnPlayPauseVideo.setOnClickListener(v -> toggleVideoPlayback());
+    }
+
+    private void navigateToSeatSelection() {
+        Intent intent = new Intent(MainMenuActivity.this, SeatSelectionActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void selectAudio() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("audio/*");
+        startActivityForResult(intent, PICK_AUDIO_REQUEST);
+    }
+
+    private void toggleAudioPlayback() {
+        if (mediaPlayer != null) {
+            if (isPlayingAudio) {
+                mediaPlayer.pause();
+            } else {
+                mediaPlayer.start();
+            }
+            isPlayingAudio = !isPlayingAudio;
+        } else {
+            Toast.makeText(MainMenuActivity.this, "Please select an audio file first", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setupVideoView() {
+        // 初始化视频视图并加载视频资源
         videoView = findViewById(R.id.video_view);
         Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/raw/sample_video"); // 确保文件名匹配
         videoView.setVideoURI(videoUri);
-        videoView.setVisibility(View.GONE); // 初始隐藏
-        videoView.requestFocus();
+        videoView.setVisibility(View.GONE);
 
-        // 添加视频准备和错误监听
-        videoView.setOnPreparedListener(mp -> {
-            Toast.makeText(MainMenuActivity.this, "Video is ready to play", Toast.LENGTH_SHORT).show();
-        });
+        videoView.setOnPreparedListener(mp -> Toast.makeText(MainMenuActivity.this, "Video is ready to play", Toast.LENGTH_SHORT).show());
 
         videoView.setOnErrorListener((mp, what, extra) -> {
             Toast.makeText(MainMenuActivity.this, "Failed to load video", Toast.LENGTH_SHORT).show();
             return true;
         });
+    }
 
-        // Play/Pause Video Button
-        Button btnPlayPauseVideo = findViewById(R.id.btn_play_pause_video);
-        btnPlayPauseVideo.setOnClickListener(v -> {
-            if (videoView.getVisibility() != View.VISIBLE) {
-                // 显示 VideoView 并播放视频
-                videoView.setVisibility(View.VISIBLE);
-                videoView.start();
-                isPlayingVideo = true;
+    private void toggleVideoPlayback() {
+        if (videoView.getVisibility() != View.VISIBLE) {
+            videoView.setVisibility(View.VISIBLE);
+            videoView.start();
+            isPlayingVideo = true;
+        } else {
+            if (isPlayingVideo) {
+                videoView.pause();
             } else {
-                // 视频可见时切换播放和暂停
-                if (isPlayingVideo) {
-                    videoView.pause();
-                    isPlayingVideo = false;
-                } else {
-                    videoView.start();
-                    isPlayingVideo = true;
-                }
+                videoView.start();
             }
-        });
-
-
-
-
-        // 设置主布局的触摸监听，更新 CircleView
-        mainLayout.setOnTouchListener((view, event) -> {
-            circleView.updateCircleArray(event);
-            return true;
-        });
+            isPlayingVideo = !isPlayingVideo;
+        }
     }
 
     @Override

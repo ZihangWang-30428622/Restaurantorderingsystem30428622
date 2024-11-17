@@ -1,0 +1,38 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GongbaoFragment">
+
+    <ImageView
+        android:id="@+id/gongbao_image"
+        android:layout_width="@dimen/_150dp"
+        android:layout_height="@dimen/_100dp"
+        android:src="@drawable/gongbao_image"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/gongbao_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintStart_toEndOf="@id/gongbao_image"
+        app:layout_constraintTop_toTopOf="@id/gongbao_image"
+        app:layout_constraintBottom_toBottomOf="@id/gongbao_image"/>
+
+    <EditText
+        android:id="@+id/et_count_gongbao"
+        android:layout_width="@dimen/_80dp"
+        android:layout_height="@dimen/_48dp"
+        android:hint="@string/enter_the_number_you_want_to_select"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@id/gongbao_price"
+        app:layout_constraintTop_toTopOf="@id/gongbao_price"
+        app:layout_constraintBottom_toBottomOf="@id/gongbao_price" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

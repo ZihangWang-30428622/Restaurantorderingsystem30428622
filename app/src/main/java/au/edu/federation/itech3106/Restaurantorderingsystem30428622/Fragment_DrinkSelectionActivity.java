@@ -1,13 +1,15 @@
 package au.edu.federation.itech3106.Restaurantorderingsystem30428622;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,23 +18,28 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.button.MaterialButton;
 
 public class Fragment_DrinkSelectionActivity extends AppCompatActivity {
 
-    private static final String PREFS_NAME = "DrinkSelectionPrefs";
+    // Price constants
     private static final double JUICE1_PRICE = 1.0;
     private static final double JUICE2_PRICE = 2.0;
+    private static final double GONGBAO_PRICE = 4.0;
+    private static final double YUXIANG_PRICE = 5.0;
     private static final double SUGAR_PRICE = 0.5;
 
+    // UI elements
     private EditText etCountJuice1;
     private EditText etCountJuice2;
+    private EditText etCountGongbao;
+    private EditText etCountYuxiang;
     private TextView tvTotalPrice;
     private CheckBox checkboxSugar;
-    private double foodTotal;
 
+    // Other variables
+    private double foodTotal;
     private CircleView circleView;
 
     @Override
@@ -40,39 +47,54 @@ public class Fragment_DrinkSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_drink_selection);
 
+        // Set up the toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Drink Selection");
+            getSupportActionBar().setTitle("Selection");
         }
 
-        // 初始化UI组件
+          // 初始化 CircleView 并添加到布局中
+        circleView = findViewById(R.id.circle_view); // 假设 activity_main_menu.xml 已定义 CircleView
+        circleView.setOnTouchListener((view, event) -> {
+            circleView.updateCircleArray(event); // 更新 CircleView 的触摸位置
+            return true; // 返回 true 表示触摸事件已处理
+        });
+
+        // Initialize UI elements
         etCountJuice1 = findViewById(R.id.et_count_juice);
         etCountJuice2 = findViewById(R.id.et_count_lanmei);
+        etCountGongbao = findViewById(R.id.et_count_gongbao);
+        etCountYuxiang = findViewById(R.id.et_count_yuxiang);
         tvTotalPrice = findViewById(R.id.tv_total_price);
         checkboxSugar = findViewById(R.id.checkbox_sugar);
 
+        // Set input range (0-20) for EditTexts
+        InputFilterMinMax inputFilter = new InputFilterMinMax(0, 20);
+        etCountJuice1.setFilters(new InputFilter[]{inputFilter});
+        etCountJuice2.setFilters(new InputFilter[]{inputFilter});
+        etCountGongbao.setFilters(new InputFilter[]{inputFilter});
+        etCountYuxiang.setFilters(new InputFilter[]{inputFilter});
+
+        // Get food total from intent
         if (getIntent() != null) {
             foodTotal = getIntent().getDoubleExtra("food_total", 0.0);
         }
 
-        // 恢复 SharedPreferences 中的保存数据
-        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        etCountJuice1.setText(preferences.getString("juice1_count", ""));
-        etCountJuice2.setText(preferences.getString("juice2_count", ""));
-        checkboxSugar.setChecked(preferences.getBoolean("sugar_checked", false));
+        // Add TextWatchers for real-time price updates
+        addTextWatcher(etCountJuice1);
+        addTextWatcher(etCountJuice2);
+        addTextWatcher(etCountGongbao);
+        addTextWatcher(etCountYuxiang);
 
-        // 设置 TextWatcher 监听输入变化
-        etCountJuice1.addTextChangedListener(new GenericTextWatcher());
-        etCountJuice2.addTextChangedListener(new GenericTextWatcher());
+        // Update price when sugar checkbox changes
         checkboxSugar.setOnCheckedChangeListener((buttonView, isChecked) -> updateTotalPrice());
 
-        // 确认按钮点击事件和确认对话框
+        // Handle submit button click
         MaterialButton confirmButton = findViewById(R.id.btn_submit);
         confirmButton.setOnClickListener(v -> {
             double total = updateTotalPrice();
 
-            // 显示确认对话框
             new AlertDialog.Builder(Fragment_DrinkSelectionActivity.this)
                     .setTitle("Confirm Order")
                     .setMessage(String.format("Your total is $ %.2f. Do you want to proceed?", total))
@@ -85,48 +107,41 @@ public class Fragment_DrinkSelectionActivity extends AppCompatActivity {
                     .show();
         });
 
-        // 添加 CircleView 到布局中
-        circleView = new CircleView(this);
-        ConstraintLayout mainLayout = findViewById(R.id.drink_selection_layout);
-        mainLayout.addView(circleView);
-
-        // 设置触摸监听器来更新 CircleView
-        mainLayout.setOnTouchListener((view, event) -> {
-            circleView.updateCircleArray(event);
-            return true;
-        });
-
-        // 初次计算并显示总价
         updateTotalPrice();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // 保存用户选择到 SharedPreferences
-        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("juice1_count", etCountJuice1.getText().toString());
-        editor.putString("juice2_count", etCountJuice2.getText().toString());
-        editor.putBoolean("sugar_checked", checkboxSugar.isChecked());
-        editor.apply();
+
+        // Save global state
+        AppGlobals appGlobals = (AppGlobals) getApplicationContext();
+
+        appGlobals.juice1Count = etCountJuice1.getText().toString();
+        appGlobals.juice2Count = etCountJuice2.getText().toString();
+        appGlobals.gongbaoCount = etCountGongbao.getText().toString();
+        appGlobals.yuxiangCount = etCountYuxiang.getText().toString();
+        appGlobals.sugarChecked = checkboxSugar.isChecked();
+
+        appGlobals.totalPrice = updateTotalPrice();
     }
 
     private double updateTotalPrice() {
         int juice1Count = getCountFromEditText(etCountJuice1);
         int juice2Count = getCountFromEditText(etCountJuice2);
+        int gongbaoCount = getCountFromEditText(etCountGongbao);
+        int yuxiangCount = getCountFromEditText(etCountYuxiang);
 
         double currentDrinkTotal = (juice1Count * JUICE1_PRICE) + (juice2Count * JUICE2_PRICE);
+        double currentFoodTotal = (gongbaoCount * GONGBAO_PRICE) + (yuxiangCount * YUXIANG_PRICE);
 
         if (checkboxSugar.isChecked()) {
             currentDrinkTotal += SUGAR_PRICE;
         }
 
-        double newTotal = foodTotal + currentDrinkTotal;
+        double newTotal = foodTotal + currentDrinkTotal + currentFoodTotal;
 
-        if (tvTotalPrice != null) {
-            tvTotalPrice.setText(String.format("Total: $ %.2f", newTotal));
-        }
+        tvTotalPrice.setText(String.format("Total: $ %.2f", newTotal));
 
         return newTotal;
     }
@@ -143,26 +158,34 @@ public class Fragment_DrinkSelectionActivity extends AppCompatActivity {
         }
     }
 
-    private class GenericTextWatcher implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    private void addTextWatcher(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // No action needed
+            }
 
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            updateTotalPrice();
-        }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Update total price in real-time
+                updateTotalPrice();
+            }
 
-        @Override
-        public void afterTextChanged(Editable s) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                // No action needed
+            }
+        });
     }
 
-    @Override
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainactivity, menu);
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -184,11 +207,34 @@ public class Fragment_DrinkSelectionActivity extends AppCompatActivity {
         Toast.makeText(this, "Returning to Home", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(Fragment_DrinkSelectionActivity.this, FoodSelectionActivity.class);
-        startActivity(intent);
-        Toast.makeText(this, "Returning to Food Selection", Toast.LENGTH_SHORT).show();
+    // InputFilter for limiting min and max values
+    private static class InputFilterMinMax implements InputFilter {
+        private final int min;
+        private final int max;
+
+        public InputFilterMinMax(int min, int max) {
+            this.min = min;
+            this.max = max;
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            try {
+                String newVal = dest.toString().substring(0, dstart) + source + dest.toString().substring(dend);
+                int input = Integer.parseInt(newVal);
+                if (isInRange(min, max, input)) {
+                    return null;
+                }
+            } catch (NumberFormatException e) {
+                // Do nothing
+            }
+            return "";
+        }
+
+        private boolean isInRange(int min, int max, int value) {
+            return value >= min && value <= max;
+        }
+
+
     }
 }
