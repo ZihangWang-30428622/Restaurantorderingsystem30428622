@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/main_menu_layout">
 
+
         <!-- CircleView -->
         <au.edu.federation.itech3106.Restaurantorderingsystem30428622.CircleView
             android:id="@+id/circle_view"

@@ -1,9 +1,12 @@
 package au.edu.federation.itech3106.Restaurantorderingsystem30428622;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +18,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -35,6 +39,9 @@ public class MainMenuActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MainMenu");
+
+ ;
+
 
         // 初始化 CircleView 并添加到布局中
         circleView = findViewById(R.id.circle_view); // 假设 activity_main_menu.xml 已定义 CircleView
@@ -148,7 +155,6 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.menu_home) {
             navigateToHome();
             return true;
@@ -156,8 +162,7 @@ public class MainMenuActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+    return super.onOptionsItemSelected(item);
     }
 
     private void navigateToHome() {
@@ -166,6 +171,7 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(intent);
         Toast.makeText(this, "Returning to Home", Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     protected void onDestroy() {
