@@ -15,6 +15,7 @@
         <au.edu.federation.itech3106.Restaurantorderingsystem30428622.CircleView
             android:id="@+id/circle_view"
             style="@style/CircleViewStyle"
+            app:popupTheme="@style/ToolbarTheme"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

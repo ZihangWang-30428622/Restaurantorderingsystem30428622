@@ -3,18 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_home"
+        android:title="Back to Home"
+  app:actionViewClass="android.widget.TextView"
 
-        android:title="Back to Home" />
+         />
 
     <item
         android:id="@+id/menu_back"
-
-        android:title="Back" />
+        android:title="Back"
+          app:actionViewClass="android.widget.TextView"
+         />
 
     <item
         android:id="@+id/menu_night_mode"
         android:title="Night Mode"
-        android:icon="@drawable/dark"
-        app:showAsAction="never"/>
+          app:actionViewClass="android.widget.TextView"
+        />
+
+
 </menu>
+
 

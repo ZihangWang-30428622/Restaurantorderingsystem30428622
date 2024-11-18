@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -30,24 +29,26 @@ public class MainMenuActivity extends AppCompatActivity {
     private VideoView videoView;
     private boolean isPlayingVideo = false;
     private CircleView circleView;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+               if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+}
+
         setContentView(R.layout.activity_main_menu);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MainMenu");
 
- ;
-
-
         // 初始化 CircleView 并添加到布局中
-        circleView = findViewById(R.id.circle_view); // 假设 activity_main_menu.xml 已定义 CircleView
+        circleView = findViewById(R.id.circle_view);
         circleView.setOnTouchListener((view, event) -> {
-            circleView.updateCircleArray(event); // 更新 CircleView 的触摸位置
-            return true; // 返回 true 表示触摸事件已处理
+            circleView.updateCircleArray(event);
+            return true;
         });
 
         setupButtons();
@@ -55,19 +56,15 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        // 座位选择按钮
         Button btnSelectSeat = findViewById(R.id.btn_select_seat);
         btnSelectSeat.setOnClickListener(v -> navigateToSeatSelection());
 
-        // 上传音频按钮
         Button btnUploadAudio = findViewById(R.id.btn_upload_audio);
         btnUploadAudio.setOnClickListener(v -> selectAudio());
 
-        // 播放/暂停音频按钮
         Button btnPlayPauseAudio = findViewById(R.id.btn_play_pause_audio);
         btnPlayPauseAudio.setOnClickListener(v -> toggleAudioPlayback());
 
-        // 播放/暂停视频按钮
         Button btnPlayPauseVideo = findViewById(R.id.btn_play_pause_video);
         btnPlayPauseVideo.setOnClickListener(v -> toggleVideoPlayback());
     }
@@ -98,9 +95,8 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void setupVideoView() {
-        // 初始化视频视图并加载视频资源
         videoView = findViewById(R.id.video_view);
-        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/raw/sample_video"); // 确保文件名匹配
+        Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/raw/sample_video");
         videoView.setVideoURI(videoUri);
         videoView.setVisibility(View.GONE);
 
@@ -154,6 +150,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+
         int id = item.getItemId();
         if (id == R.id.menu_home) {
             navigateToHome();
@@ -161,8 +159,11 @@ public class MainMenuActivity extends AppCompatActivity {
         } else if (id == R.id.menu_back) {
             onBackPressed();
             return true;
+        } else if (id == R.id.menu_night_mode) {
+            toggleNightMode();
+            return true;
         }
-    return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     private void navigateToHome() {
@@ -172,6 +173,17 @@ public class MainMenuActivity extends AppCompatActivity {
         Toast.makeText(this, "Returning to Home", Toast.LENGTH_SHORT).show();
     }
 
+  private void toggleNightMode() {
+    // 不再依赖 SharedPreferences，直接切换模式
+    int currentMode = AppCompatDelegate.getDefaultNightMode();
+    if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        // 切换到日间模式
+    } else {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // 切换到夜间模式
+    }
+    recreate(); // 重新创建活动以应用主题变化
+}
 
     @Override
     protected void onDestroy() {

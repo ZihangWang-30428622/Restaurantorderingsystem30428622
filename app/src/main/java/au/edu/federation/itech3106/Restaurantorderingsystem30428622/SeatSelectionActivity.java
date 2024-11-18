@@ -1,7 +1,9 @@
 package au.edu.federation.itech3106.Restaurantorderingsystem30428622;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -19,10 +22,13 @@ public class SeatSelectionActivity extends AppCompatActivity {
 
     private EditText seatNumberInput;
     private CircleView circleView;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_seat_selection);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -30,6 +36,8 @@ public class SeatSelectionActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Seat Selection");
         }
+
+
 
         seatNumberInput = findViewById(R.id.input_seat_number);
 
@@ -71,18 +79,19 @@ public class SeatSelectionActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
+     public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
         if (id == R.id.menu_home) {
             navigateToHome();
             return true;
         } else if (id == R.id.menu_back) {
             onBackPressed();
             return true;
+        } else if (id == R.id.menu_night_mode) {
+            toggleNightMode();
+            return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -92,7 +101,17 @@ public class SeatSelectionActivity extends AppCompatActivity {
         startActivity(intent);
         Toast.makeText(this, "Returning to Home", Toast.LENGTH_SHORT).show();
     }
-
+ private void toggleNightMode() {
+    // 不再依赖 SharedPreferences，直接切换模式
+    int currentMode = AppCompatDelegate.getDefaultNightMode();
+    if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        // 切换到日间模式
+    } else {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // 切换到夜间模式
+    }
+    recreate(); // 重新创建活动以应用主题变化
+}
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -116,4 +135,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .show();
     }
+
+
+
 }
